@@ -1,0 +1,24 @@
+# OPTIONAL: local SQL Server 2022 for development (no paid services required).
+# Usage:   docker compose up -d
+# Connection string (non-Windows hosts or if Trusted_Connection is not available):
+#   Server=localhost,1433;Database=OrderInventoryDb;User Id=sa;Password=Your_password123;
+#   TrustServerCertificate=True;MultipleActiveResultSets=true
+#
+# Replace Backend/appsettings.json connection string accordingly.
+# This file is a convenience only - instructions for a locally installed
+# SQL Server / SQL Server Express are in README.md and work without Docker.
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: orderinventory-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Your_password123"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+volumes:
+  sqlserver-data:
